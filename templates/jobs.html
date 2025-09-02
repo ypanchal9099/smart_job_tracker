@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">Saved Jobs</h3>
+{% if not jobs %}
+  <div class="alert alert-info">No jobs yet. Paste a job description from the Home page to save one.</div>
+{% else %}
+<table class="table table-hover align-middle">
+  <thead>
+    <tr><th>When</th><th>Company</th><th>Role</th><th>Location</th><th>Match</th></tr>
+  </thead>
+  <tbody>
+    {% for j in jobs %}
+    <tr>
+      <td class="text-nowrap">{{ j.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+      <td>{{ j.company }}</td>
+      <td><a href="{{ url_for('job_detail', job_id=j.id) }}">{{ j.role }}</a></td>
+      <td>{{ j.location or "-" }}</td>
+      <td><span class="badge bg-{{ 'success' if j.match_score>=75 else ('warning' if j.match_score>=50 else 'secondary') }}">{{ j.match_score }}%</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

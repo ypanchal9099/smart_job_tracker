@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">Your Resume</h3>
+<form method="POST" enctype="multipart/form-data">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Upload Resume (PDF/DOCX/TXT)</label>
+      <input type="file" class="form-control" name="resume_file" accept=".pdf,.docx,.txt" />
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Or paste resume text</label>
+      <textarea class="form-control" name="resume_text" rows="5" placeholder="Paste your resume text here..."></textarea>
+    </div>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary" type="submit">Save Resume</button>
+  </div>
+</form>
+<hr/>
+<h5>Recent uploads</h5>
+<table class="table table-sm">
+  <thead><tr><th>When</th><th>File</th></tr></thead>
+  <tbody>
+  {% for r in resumes %}
+    <tr>
+      <td>{{ r.uploaded_at.strftime("%Y-%m-%d %H:%M") }}</td>
+      <td>
+        {% if r.filename != "pasted.txt" %}
+          <a href="{{ url_for('download', filename=r.filename) }}">{{ r.filename }}</a>
+        {% else %}
+          (pasted text)
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
