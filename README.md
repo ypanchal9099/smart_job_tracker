@@ -12,7 +12,7 @@ A Flask web app to compare your resume with job descriptions and compute a match
 
 ## Run locally
 ```bash
-git clone https://github.com/yourusername/smart_job_tracker.git
+[git clone https://github.com/ypanchal9099/smart_job_tracker.git]
 cd smart_job_tracker
 python -m venv .venv
 . .venv\Scripts\activate   # Windows
