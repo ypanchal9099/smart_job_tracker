@@ -4,12 +4,24 @@ A web app built with Flask + NLP to compare your resume with job descriptions an
 It highlights matched & missing skills to help you tailor your resume for each role.
 
 ## Features
-- Upload resume (PDF/DOCX/TXT) or paste text
+- Upload your resume (PDF/DOCX/TXT) or paste text
 - Paste job description
-- NLP similarity (TF-IDF cosine) + skill overlap
-- Shows matched & missing skills
-- Stores jobs in SQLite
-- Bootstrap UI
+- NLP-based similarity using TF-IDF cosine
+- Extracts skills from a customizable data/skills.csv
+- Shows Match Score (0–100), Matched Skills, and Missing Skills
+- Saves jobs with company, role, and location in the SQLite database
+- Clean Bootstrap UI
+
+
+##Future Improvements
+
+🔑 User authentication (login/register)
+
+📊 Analytics dashboard (track scores over time, most common missing skills)
+
+📤 Export jobs & scores as CSV
+
+✨ Auto-suggest resume bullet points for missing skills
 
 ## Run locally
 ```bash
