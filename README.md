@@ -12,16 +12,12 @@ It highlights matched & missing skills to help you tailor your resume for each r
 - Saves jobs with company, role, and location in the SQLite database
 - Clean Bootstrap UI
 
+## Future Improvements
 
-##Future Improvements
-
-🔑 User authentication (login/register)
-
-📊 Analytics dashboard (track scores over time, most common missing skills)
-
-📤 Export jobs & scores as CSV
-
-✨ Auto-suggest resume bullet points for missing skills
+- User authentication (login/register)
+- Analytics dashboard (track scores over time, most common missing skills)
+- Export jobs & scores as CSV
+- Auto-suggest resume bullet points for missing skills
 
 ## Run locally
 ```bash
