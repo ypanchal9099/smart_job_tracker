@@ -1,6 +1,7 @@
 # Smart Job Tracker & Resume Matcher (NLP)
 
-A Flask web app to compare your resume with job descriptions and compute a match score.
+A web app built with Flask + NLP to compare your resume with job descriptions and generate a match score.
+It highlights matched & missing skills to help you tailor your resume for each role.
 
 ## Features
 - Upload resume (PDF/DOCX/TXT) or paste text
