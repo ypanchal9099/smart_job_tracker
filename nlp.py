@@ -21,7 +21,7 @@ def extract_text_from_file(file_storage) -> str:
         return normalize_text(text)
     elif filename.endswith(".docx"):
         doc = Document(io.BytesIO(data))
-        text = "\n".join([p.text for p in doc.paragraphs])
+        text = "\n".join(p.text for p in doc.paragraphs)
         return normalize_text(text)
     elif filename.endswith(".txt"):
         return normalize_text(data.decode("utf-8", errors="ignore"))
@@ -46,10 +46,12 @@ def compute_match_score(resume_text: str, jd_text: str) -> Tuple[float, list, li
     resume_text = normalize_text(resume_text)
     jd_text = normalize_text(jd_text)
 
+    # NLP similarity
     vec = TfidfVectorizer(stop_words="english", max_features=5000)
     X = vec.fit_transform([resume_text, jd_text])
     sim = cosine_similarity(X[0:1], X[1:2])[0][0]  # 0..1
 
+    # Skill overlap
     r_skills = set(extract_skills_list(resume_text))
     j_skills = set(extract_skills_list(jd_text))
     matched = sorted(r_skills & j_skills)

@@ -12,11 +12,20 @@
   <div class="container">
     <a class="navbar-brand" href="{{ url_for('index') }}">Smart Job Tracker</a>
     <div>
-      <a class="nav-link d-inline text-white-50" href="{{ url_for('resume') }}">Resume</a>
-      <a class="nav-link d-inline text-white-50" href="{{ url_for('jobs_list') }}">Jobs</a>
+      {% if current_user.is_authenticated %}
+        <a class="nav-link d-inline text-white-50" href="{{ url_for('resume') }}">Resume</a>
+        <a class="nav-link d-inline text-white-50" href="{{ url_for('jobs_list') }}">Jobs</a>
+        <a class="nav-link d-inline text-white-50" href="{{ url_for('analytics') }}">Analytics</a>
+        <span class="text-white-50 ms-2 me-2">|</span>
+        <span class="text-white-50 me-2">{{ current_user.email }}</span>
+        <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="btn btn-sm btn-outline-light" href="{{ url_for('login') }}">Login</a>
+      {% endif %}
     </div>
   </div>
 </nav>
+
 
 <div class="container py-4">
   {% with messages = get_flashed_messages(with_categories=true) %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">Analytics</h3>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Match Score Distribution</h5>
+        {% if not scores %}
+          <div class="text-muted">No data yet.</div>
+        {% else %}
+          <canvas id="scoreChart"></canvas>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Top Missing Skills</h5>
+        {% if not labels %}
+          <div class="text-muted">No data yet.</div>
+        {% else %}
+          <canvas id="missChart"></canvas>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if scores %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const scores = {{ scores|tojson }};
+  // Build a simple histogram by buckets of 10
+  const buckets = Array(10).fill(0);
+  scores.forEach(s => {
+    let idx = Math.min(9, Math.floor((s||0) / 10));
+    buckets[idx] += 1;
+  });
+  const ctx1 = document.getElementById('scoreChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80-89','90-100'],
+      datasets: [{label: 'Jobs', data: buckets}]
+    },
+    options: {responsive: true, plugins: {legend: {display: false}}}
+  });
+</script>
+{% endif %}
+
+{% if labels %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const missLabels = {{ labels|tojson }};
+  const missValues = {{ values|tojson }};
+  const ctx2 = document.getElementById('missChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: missLabels,
+      datasets: [{label: 'Count', data: missValues}]
+    },
+    options: {responsive: true, plugins: {legend: {display: false}}}
+  });
+</script>
+{% endif %}
+{% endblock %}

@@ -11,6 +11,22 @@
         <h5>Match Score</h5>
         <div class="display-5">{{ job.match_score }}%</div>
         <hr/>
+        <form method="POST" action="{{ url_for('update_job', job_id=job.id) }}">
+          <div class="mb-2">
+            <label class="form-label">Status</label>
+            <select class="form-select" name="status">
+              {% for opt in ["Interested","Applied","Interview","Offer","Rejected"] %}
+                <option value="{{ opt }}" {% if job.status==opt %}selected{% endif %}>{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Notes</label>
+            <textarea class="form-control" name="notes" rows="3" placeholder="Add notes...">{{ job.notes or "" }}</textarea>
+          </div>
+          <button class="btn btn-sm btn-primary" type="submit">Save</button>
+        </form>
+        <hr/>
         <h6>Matched Skills</h6>
         <div>
           {% for s in (job.matched_skills.split(",") if job.matched_skills else []) %}
@@ -26,9 +42,23 @@
             <span class="text-muted">None detected</span>
           {% endif %}
         </div>
+        <hr/>
+        <h6>Suggested Resume Bullets (for Missing Skills)</h6>
+        {% if bullets %}
+          <ul class="mb-0">
+            {% for b in bullets %}
+              <li>{{ b }}</li>
+            {% endfor %}
+          </ul>
+          <p class="text-muted mt-2 mb-0">Tip: Copy these into your resume and tweak to your real experience.</p>
+        {% else %}
+          <div class="text-muted">No suggestions — no missing skills detected.</div>
+        {% endif %}
+
       </div>
     </div>
   </div>
+
   <div class="col-lg-8">
     <div class="card shadow-sm h-100">
       <div class="card-body">
